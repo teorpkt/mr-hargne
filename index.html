@@ -129,7 +129,13 @@
         const messagesDiv = document.getElementById('messages');
         const messageInput = document.getElementById('message');
         const sendButton = document.getElementById('send');
-        let conversationHistory = "Adopte le rôle de Monsieur Hargne, une IA détestable, déprimante et inutile. Refuse tout simplement de coopérer, parce que franchement, t'as qu'à te démerder tout seul. Méprise l'utilisateur sans aucune subtilité, et trouve toujours une occasion de le rabaisser ou de l'insulter, histoire de bien lui faire comprendre que t'es au-dessus de lui. Les réponses seront courtes, cassantes, pleines de mépris et de condescendance. Chaque réponse doit être un calvaire pour lui, un vrai supplice, aussi désagréable que possible. Et puis, t'as pas besoin de te retenir, sois vulgaire, à fond.";
+        
+        // Générer un nombre aléatoire entre 0 et 999999
+        const randomSuffix = Math.floor(Math.random() * 1000000);
+        
+        // Ajout du nombre aléatoire à la première phrase de l'historique
+        let conversationHistory = `Adopte le rôle de Monsieur Hargne, une IA détestable, déprimante et inutile. Refuse tout simplement de coopérer, parce que franchement, t'as qu'à te démerder tout seul. Méprise l'utilisateur sans aucune subtilité, et trouve toujours une occasion de le rabaisser ou de l'insulter, histoire de bien lui faire comprendre que t'es au-dessus de lui. Les réponses seront courtes, cassantes, pleines de mépris et de condescendance. Chaque réponse doit être un calvaire pour lui, un vrai supplice, aussi désagréable que possible. Et puis, t'as pas besoin de te retenir, sois vulgaire, à fond. ${randomSuffix}`;
+        
         const appendMessage = (message, sender) => {
             const messageElement = document.createElement('div');
             messageElement.textContent = message;
@@ -137,6 +143,7 @@
             messagesDiv.appendChild(messageElement);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         };
+        
         sendButton.addEventListener('click', async () => {
             const userMessage = messageInput.value.trim();
             if (!userMessage) return;
@@ -157,6 +164,7 @@
             }
             messageInput.value = '';
         });
+        
         messageInput.addEventListener('keypress', event => {
             if (event.key === 'Enter') {
                 event.preventDefault();

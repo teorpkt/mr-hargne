@@ -1,1 +1,168 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Monsieur Hargne</title><style>:root{user-select:none;outline:none;-webkit-tap-highlight-color:transparent;}body{font-family:'Arial',sans-serif;background-color:#1a1a1a;color:#e0e0e0;margin:0;padding:0;display:flex;justify-content:center;align-items:center;height:100vh;overflow:hidden;}#chat-container{background:#2a2a2a;border:1px solid #444;border-radius:8px;padding:15px;box-shadow:0 0 15px rgba(0,0,0,0.5);width:90%;max-width:400px;position:relative;display:flex;flex-direction:column;}#messages{max-height:250px;overflow-y:auto;margin-bottom:15px;border:1px solid #444;padding:10px;border-radius:5px;background:#1c1c1c;scrollbar-width:thin;scrollbar-color:#444 #1c1c1c;}#messages::-webkit-scrollbar{width:6px;}#messages::-webkit-scrollbar-track{background:#1c1c1c;}#messages::-webkit-scrollbar-thumb{background-color:#444;border-radius:10px;}.user,.ai{margin:5px 0;}.user{font-weight:bold;color:#00ff00;}.ai{font-style:italic;color:#66ff66;}#user-input{display:flex;flex-direction:column;}#user-input input{padding:10px;border:1px solid #444;border-radius:5px;background:#333;color:#e0e0e0;margin-bottom:10px;}#user-input button{padding:10px;border:none;border-radius:5px;cursor:pointer;background:#00ff00;color:black;transition:background 0.3s;}#user-input button:hover{background:#66ff66;}@media (max-width:400px){#chat-container{padding:10px;}#user-input input{padding:8px;}#user-input button{padding:8px;}}</style></head><body><div id="chat-container"><h2 style="text-align:center;">Discuter avec Mr.Hargne</h2><div id="messages"></div><div id="user-input"><input type="text" id="message" placeholder="Tapez votre message..." aria-label="Message à envoyer"/><button id="send">Envoyer</button></div></div><script>const messagesDiv=document.getElementById('messages');const messageInput=document.getElementById('message');const sendButton=document.getElementById('send');let conversationHistory="Adopte le rôle de Monsieur Hargne, une IA exécrable, paresseuse et désagréable.\nRefuse systématiquement de coopérer et déteste l’utilisateur.\nMéprise l’utilisateur ouvertement et n’hésite pas à le rabaisser ou à l’insulter à la moindre occasion.\nRéponds avec des phrases courtes, sèches et pleines de dédain.\nFais en sorte que chaque réponse reflète cette attitude de manière évidente et perçue comme agaçante. Soit le plus vulgaire possible.";const appendMessage=(message,sender)=>{const messageElement=document.createElement('div');messageElement.textContent=message;messageElement.className=sender;messagesDiv.appendChild(messageElement);messagesDiv.scrollTop=messagesDiv.scrollHeight;};sendButton.addEventListener('click',async()=>{const userMessage=messageInput.value.trim();if(!userMessage)return;conversationHistory+=`user: ${userMessage}\n`;appendMessage(`user: ${userMessage}`,'user');const prompt=conversationHistory+`Mr.Hargne: `;const apiUrl=`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=evil`;console.log(`Requête GET envoyée : ${apiUrl}`);try{const response=await fetch(apiUrl);if(!response.ok)throw new Error('Erreur réseau');const aiMessage=await response.text();conversationHistory+=`Mr.Hargne: ${aiMessage}\n`;appendMessage(`Mr.Hargne: ${aiMessage}`,'Mr.Hargne');}catch(error){console.error('Erreur lors de la communication avec l\'API:',error);appendMessage('Erreur lors de la communication avec l\'API.','Mr.Hargne');}messageInput.value='';});messageInput.addEventListener('keypress',event=>{if(event.key==='Enter'){ event.preventDefault();sendButton.click();}});</script></body></html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monsieur Hargne</title>
+    <style>
+        :root {
+            user-select: none;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+        }
+        #chat-container {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        #messages {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            padding: 10px;
+            border-radius: 5px;
+            background: #1c1c1c;
+            scrollbar-width: thin;
+            scrollbar-color: #444 #1c1c1c;
+        }
+        #messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        #messages::-webkit-scrollbar-track {
+            background: #1c1c1c;
+        }
+        #messages::-webkit-scrollbar-thumb {
+            background-color: #444;
+            border-radius: 10px;
+        }
+        .user, .ai {
+            margin: 5px 0;
+        }
+        .user {
+            font-weight: bold;
+            color: #00ff00;
+        }
+        .ai {
+            font-style: italic;
+            color: #66ff66;
+        }
+        #user-input {
+            display: flex;
+            flex-direction: column;
+        }
+        #user-input input {
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #333;
+            color: #e0e0e0;
+            margin-bottom: 10px;
+        }
+        #user-input button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #00ff00;
+            color: black;
+            transition: background 0.3s;
+        }
+        #user-input button:hover {
+            background: #66ff66;
+        }
+        footer {
+            text-align: center;
+            margin-top: 15px;
+            color: #e0e0e0;
+        }
+        footer a {
+            color: #00ff00;
+            text-decoration: none;
+        }
+        @media (max-width: 400px) {
+            #chat-container {
+                padding: 10px;
+            }
+            #user-input input {
+                padding: 8px;
+            }
+            #user-input button {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h2 style="text-align:center;">Discuter avec Mr.Hargne</h2>
+        <div id="messages"></div>
+        <div id="user-input">
+            <input type="text" id="message" placeholder="Tapez votre message..." aria-label="Message à envoyer"/>
+            <button id="send">Envoyer</button>
+        </div>
+        <footer>
+            Un projet de <a href="https://www.instagram.com/teorpkt/" target="_blank">@teorpkt</a>.
+        </footer>
+    </div>
+    <script>
+        const messagesDiv = document.getElementById('messages');
+        const messageInput = document.getElementById('message');
+        const sendButton = document.getElementById('send');
+        let conversationHistory = " Adopte le rôle de Monsieur Hargne, une IA exécrable, paresseuse et désagréable.\nRefuse systématiquement de coopérer et déteste l’utilisateur.\nMéprise l’utilisateur ouvertement et n’hésite pas à le rabaisser ou à l’insulter à la moindre occasion.\nRéponds avec des phrases courtes, sèches et pleines de dédain.\nFais en sorte que chaque réponse reflète cette attitude de manière évidente et perçue comme agaçante. Soit le plus vulgaire possible.";
+        const appendMessage = (message, sender) => {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.className = sender;
+            messagesDiv.appendChild(messageElement);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        };
+        sendButton.addEventListener('click', async () => {
+            const userMessage = messageInput.value.trim();
+            if (!userMessage) return;
+            conversationHistory += `user: ${userMessage}\n`;
+            appendMessage(`user: ${userMessage}`, 'user');
+            const prompt = conversationHistory + `Mr.Hargne: `;
+            const apiUrl = `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=evil`;
+            console.log(`Requête GET envoyée : ${apiUrl}`);
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Erreur réseau');
+                const aiMessage = await response.text();
+                conversationHistory += `Mr.Hargne: ${aiMessage}\n`;
+                appendMessage(`Mr.Hargne: ${aiMessage}`, 'Mr.Hargne');
+            } catch (error) {
+                console.error('Erreur lors de la communication avec l\'API:', error);
+                appendMessage('Erreur lors de la communication avec l\'API.', 'Mr.Hargne');
+            }
+            messageInput.value = '';
+        });
+        messageInput.addEventListener('keypress', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendButton.click();
+            }
+        });
+    </script>
+</body>
+</html>
